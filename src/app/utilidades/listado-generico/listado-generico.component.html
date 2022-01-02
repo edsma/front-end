@@ -1,0 +1,10 @@
+<div *ngIf="!listado">
+  <span #vacio><ng-content select="[vacio]"></ng-content></span>
+  <span *ngIf="!vacio.innerHTML.trim()">
+    <p>No hay películas para mostrar</p>
+  </span>
+</div>
+
+<ng-container *ngIf="listado && listado.length > 0">
+  <ng-content select="[contenedor]"></ng-content>
+</ng-container>
