@@ -1,3 +1,8 @@
 export interface generoCreacionDto{
-    Nombre:string;
+    nombre:string;
+}
+
+export interface generoDto{
+    id:number;
+    nombre: string
 }

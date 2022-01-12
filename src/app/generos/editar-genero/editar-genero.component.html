@@ -1,3 +1,5 @@
 <app-formulario-genero 
-(submit)="guardarCambios($event)"
+*ngIf="modelo"
+(onSubmit)="guardarCambios($event)"
 [modelo]="modelo"></app-formulario-genero>
+<mat-spinner *ngIf="!modelo"></mat-spinner>

@@ -22,10 +22,12 @@
     "@angular/platform-browser-dynamic": "~11.0.5",
     "@angular/router": "~11.0.5",
     "@asymmetrik/ngx-leaflet": "^8.1.0",
+    "@sweetalert2/ngx-sweetalert2": "^10.0.0",
     "leaflet": "^1.7.1",
     "ngx-markdown": "^10.1.1",
     "primeng": "^11.4.2",
     "rxjs": "~6.6.0",
+    "sweetalert2": "^11.3.4",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },
