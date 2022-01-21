@@ -1,11 +1,21 @@
 export interface actorDto{
     nombre:string,
     fechaNacimiento:Date,
-    foto: string
+    foto: string,
+    id:number;
+    biografia:string;
 }
 
 export interface actorCreacionDto{
     nombre:string,
     fechaNacimiento:Date,
-    foto: File
+    foto: File,
+    biografia: string;
+}
+
+export interface actorPeliculaDto {
+    id: number;
+    nombre: string;
+    personaje: string;
+    foto: string
 }

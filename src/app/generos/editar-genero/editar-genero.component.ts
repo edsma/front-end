@@ -31,7 +31,7 @@ export class EditarGeneroComponent implements OnInit {
   guardarCambios(genero: generoCreacionDto)
   {
     this.generoService.editar(this.modelo.id,genero).subscribe(() => {
-      this.router.navigate(['/generos'])
+      this.router.navigate(['/cines'])
     },(error) => this.errores = parsearErroresApi(error) );
     console.log(genero);
   }

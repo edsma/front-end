@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { actorCreacionDto, actorDto } from '../actores/Actor';
 
 @Component({
@@ -9,13 +10,15 @@ import { actorCreacionDto, actorDto } from '../actores/Actor';
 })
 export class FormularioActoresComponent implements OnInit {
 
-  constructor(private formBuilder:FormBuilder) { }
+  constructor(private router: Router, private formBuilder: FormBuilder) { }
 
   form:FormGroup;
   
   @Output()
-  submit: EventEmitter<actorCreacionDto> = new EventEmitter<actorCreacionDto>();
+  onSubmit: EventEmitter<actorCreacionDto> = new EventEmitter<actorCreacionDto>();
   
+  imagenCambiada = false;
+
   @Input()
   modelo:actorDto;
 
@@ -36,11 +39,16 @@ export class FormularioActoresComponent implements OnInit {
   }
 
   archivoSeleccionado(file){
+    this.imagenCambiada = true;
     this.form.get('foto').setValue(file);
   }
 
-  onSubmit(){
-    this.submit.emit(this.form.value)
+  guardarCambios(){
+    if(!this.imagenCambiada){
+      this.form.patchValue({'foto': null});
+    }
+
+    this.onSubmit.emit(this.form.value);
   }
 
 }

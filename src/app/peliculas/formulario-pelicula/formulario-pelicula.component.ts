@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { actorPeliculaDto } from 'src/app/actores/Actor';
 import { MultipleSelectorModel } from 'src/app/utilidades/selector-multiple/MultipleSelectorModelo';
 import { PeliculaCreacionDto, PeliculaDto } from '../Pelicula';
 
@@ -10,59 +11,85 @@ import { PeliculaCreacionDto, PeliculaDto } from '../Pelicula';
 })
 export class FormularioPeliculaComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder) {}
+
   form: FormGroup;
 
-  @Output()
-  OnSubmit: EventEmitter<PeliculaCreacionDto> = new EventEmitter<PeliculaCreacionDto>();
-  
+  @Input()
+  errores: string[] = [];
+
   @Input()
   modelo: PeliculaDto;
 
-  generosNoSeleccionados: MultipleSelectorModel[] = [
-    {llave:1, valor:'Drama'},
-    {llave:2, valor:'Acción'},
-    {llave:3, valor:'Comedia'} 
-  ];
+  @Output()
+  OnSubmit: EventEmitter<PeliculaCreacionDto> = new EventEmitter<
+    PeliculaCreacionDto
+  >();
 
-  cinesNoSeleccionados: MultipleSelectorModel[] = [
-    {llave:1, valor:'Medellín'},
-    {llave:2, valor:'Bello'},
-    {llave:3, valor:'Sabaneta'} 
-  ];
+  @Input()
+  generosNoSeleccionados: MultipleSelectorModel[];
 
+  @Input()
+  generosSeleccionados: MultipleSelectorModel[] = [];
+
+  @Input()
+  cinesNoSeleccionados: MultipleSelectorModel[];
+
+  @Input()
   cinesSeleccionados: MultipleSelectorModel[] = [];
 
-  generosSeleccionados: MultipleSelectorModel[] = [];
+  @Input()
+  actoresSeleccionados: actorPeliculaDto[] = [];
+  imagenCambiada = false;
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      titulo:['', {
-        validators: [Validators.required]
-      }],
+      titulo: [
+        '',
+        {
+          validators: [Validators.required],
+        },
+      ],
       resumen: '',
       enCines: false,
       trailer: '',
-      fechaLanzamiento: '',
-      poster:'',
-      generosId: '',
-      cinesId: ''
+      fechaLanzamiento: '', 
+      poster: '',
+      generosIds: '',
+      cinesIds: '',
+      actores: ''
     });
 
-    if(this.modelo !== undefined){
+    if (this.modelo !== undefined) {
       this.form.patchValue(this.modelo);
     }
   }
 
-  guardarCambios(){
-      const generosIds = this.generosSeleccionados.map(valores => valores.llave);
-      this.form.get('generosId').setValue(generosIds);
-      const cinesIds = this.cinesSeleccionados.map(valores => valores.llave);
-      this.form.get('cinesId').setValue(cinesIds);
-      this.OnSubmit.emit(this.form.value);
+  cambioMarkDown(texto:string){
+    this.form.get('resumen').setValue(texto);
+  }
+
+  guardarCambios() {
+    const generosIds = this.generosSeleccionados.map(val => val.llave);
+    this.form.get('generosIds').setValue(generosIds);
+
+    const cinesIds = this.cinesSeleccionados.map(val => val.llave);
+    this.form.get('cinesIds').setValue(cinesIds);
+
+    const actores = this.actoresSeleccionados.map(val => {
+      return {id: val.id, personaje: val.personaje}
+    });
+    this.form.get('actores').setValue(actores);
+debugger;
+    if (!this.imagenCambiada){
+      this.form.patchValue({'poster': null});
+    }
+
+    this.OnSubmit.emit(this.form.value);
   }
 
   archivoSeleccionado(archivo:File){
     this.form.get('poster').setValue(archivo);
+    this.imagenCambiada = true;
   }
 }
