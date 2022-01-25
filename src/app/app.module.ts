@@ -36,6 +36,7 @@ import { AutocompleteActoresComponent } from './actores/autocomplete-actores/aut
 import {HttpClientModule} from '@angular/common/http';
 import { MostrarErroresComponent } from './utilidades/mostrar-errores/mostrar-errores.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { DetallePeliculaComponent } from './peliculas/detalle-pelicula/detalle-pelicula.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     SelectorMultipleComponent,
     AutocompleteActoresComponent,
     MostrarErroresComponent,
+    DetallePeliculaComponent,
 
   ],
   imports: [

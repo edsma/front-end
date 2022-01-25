@@ -80,7 +80,6 @@ export class FormularioPeliculaComponent implements OnInit {
       return {id: val.id, personaje: val.personaje}
     });
     this.form.get('actores').setValue(actores);
-debugger;
     if (!this.imagenCambiada){
       this.form.patchValue({'poster': null});
     }

@@ -1,3 +1,13 @@
 <h2>Editar pelicula</h2>
 
-<app-formulario-pelicula [modelo]="modelo" (OnSubmit)="guardarCambios($event)"></app-formulario-pelicula>
+<app-formulario-pelicula
+*ngIf="modelo"
+[generosNoSeleccionados]="generosNoSeleccionados"
+[generosSeleccionados]="generosSeleccionados"
+[cinesSeleccionados]="cinesSeleccionados"
+[cinesNoSeleccionados]="cinesNoSeleccionados"
+[actoresSeleccionados]="actoresSeleccionados"
+
+[modelo]="modelo" (OnSubmit)="guardarCambios($event)"></app-formulario-pelicula>
+
+<mat-spinner *ngIf="!modelo"></mat-spinner>

@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { formatearFecha } from '../utilidades/utilidades';
-import { PeliculaCreacionDto, PeliculaPostGet } from './Pelicula';
+import { LandingPageDto, PeliculaCreacionDto, PeliculaDto, PeliculaPostGet, PeliculaPutGetDto } from './Pelicula';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,22 @@ export class PeliculasService {
 
   public postGet(): Observable<PeliculaPostGet>{
     return this.http.get<PeliculaPostGet>(`${this.apiUrl}/PostGet`);
+  }
+
+  public filtrar(valores:any):Observable<any>{
+    const params = new HttpParams({fromObject: valores});
+    return this.http.get<PeliculaDto[]>(`${this.apiUrl}/filtrar`, {params,observe: 'response'});
+  }
+
+  putGet(id: number): Observable<PeliculaPutGetDto>{
+    return this.http.get<PeliculaPutGetDto>(`${this.apiUrl}/PutGet/${id}`);
+  }
+  public obtenerLandingPage() : Observable<LandingPageDto>{
+    return this.http.get<LandingPageDto>(this.apiUrl);
+  }
+
+  public obtenerPorId(id: number): Observable<PeliculaDto>{
+    return this.http.get<PeliculaDto>(`${this.apiUrl}/${id}`)
   }
 
   public crear(pelicula: PeliculaCreacionDto){

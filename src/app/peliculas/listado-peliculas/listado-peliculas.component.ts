@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { PeliculaDto } from '../Pelicula';
 
 @Component({
   selector: 'app-listado-peliculas',
@@ -9,7 +10,7 @@ export class ListadoPeliculasComponent implements OnInit {
 
   constructor() { }
   @Input()
-  peliculas;
+  peliculas: PeliculaDto[];
   ngOnInit(): void {
   }
 

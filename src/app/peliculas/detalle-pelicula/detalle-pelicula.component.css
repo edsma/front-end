@@ -1,0 +1,7 @@
+mat-chip-list{
+    display: inline-block;
+};
+
+mat-chip{
+    cursor: pointer;
+}

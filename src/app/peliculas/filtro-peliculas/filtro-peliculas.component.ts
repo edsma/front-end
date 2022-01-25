@@ -1,7 +1,12 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute } from '@angular/router';
+import { generoDto } from 'src/app/generos/Genero/Genero';
+import { GenerosService } from 'src/app/generos/generos.service';
+import { PeliculaDto } from '../Pelicula';
+import { PeliculasService } from '../peliculas.service';
 
 @Component({
   selector: 'app-filtro-peliculas',
@@ -12,33 +17,18 @@ export class FiltroPeliculasComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private location: Location,
-    private activatedRoute: ActivatedRoute ) { }
+    private activatedRoute: ActivatedRoute,
+    private generosService: GenerosService,
+    private peliculasService: PeliculasService ) { }
   form: FormGroup;
 
-  generos = [
-    {id:1,Nombre: 'Drama'},
-    {id:2,Nombre: 'Acción'},
-    {id:3,Nombre: 'Comedia'}
-  ];
+  generos: generoDto[] = [];
 
-  peliculas = [{
-    titulo: 'Spider-man: No Way Home',
-    enCines: false,
-    proximosEstrenos: true,
-    generos: [1,2],
-    poster: 'https://images.thedirect.com/media/photos/FFsnSEsXoAY9nKC.jpg'
-    },
-    {
-      titulo: 'Moana',
-      enCines: true,
-      proximosEstrenos: false,
-      generos: [3],
-      poster: 'https://m.media-amazon.com/images/I/61LvklojTFL._AC_.jpg'
-    }
+  peliculas:PeliculaDto[];
+  paginaActual = 1;
+  cantidadElementosMostrar = 10;
+  cantidadElementos;   
 
-  ];
-
-  peliculasOriginal = this.peliculas;
   formularioOriginal = {
     titulo: '',
     generoId: 0,
@@ -47,20 +37,24 @@ export class FiltroPeliculasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      titulo: '',
-      generoId: 0,
-      proximosEstrenos: false,
-      enCines: false
-    });
-    this.leerValoresUrl(); 
-    this.buscarPeliculas(this.form.value);
-
-    this.form.valueChanges
-    .subscribe(valores => {
-      this.peliculas = this.peliculasOriginal;
-      this.buscarPeliculas(valores);
-      this.escribirParametrosBusquedaEnUrl();
+    this.generosService.ObtenerTodos()
+    .subscribe(generos => {
+      debugger;
+      this.generos = generos;
+      this.form = this.formBuilder.group({
+        titulo: '',
+        generoId: 0,
+        proximosEstrenos: false,
+        enCines: false
+      });
+      this.leerValoresUrl(); 
+      this.buscarPeliculas(this.form.value);
+  
+      this.form.valueChanges
+      .subscribe(valores => {
+        this.buscarPeliculas(valores);
+        this.escribirParametrosBusquedaEnUrl();
+      });
     });
   }
 
@@ -109,25 +103,26 @@ export class FiltroPeliculasComponent implements OnInit {
   }
 
   buscarPeliculas(valores:any){
-    if(valores.titulo){
-        this.peliculas = this.peliculas.filter(pelicula => pelicula.titulo.indexOf(valores.titulo) !== -1);
-    }
+    debugger;
+    valores.pagina = this.paginaActual;
+    valores.recordsPorPagina = this.cantidadElementosMostrar;
+    this.peliculasService.filtrar(valores)
+    .subscribe(response => {
+      this.peliculas = response.body;
+      this.cantidadElementos = response.headers.get('cantidadTotalRegistros');
+      this.escribirParametrosBusquedaEnUrl();
 
-    if(valores.generoId !== 0){
-      this.peliculas = this.peliculas.filter(pelicula => pelicula.generos.indexOf(valores.generoId) !== -1);
-    }
-
-    if(valores.proximosEstrenos){
-      this.peliculas = this.peliculas.filter(pelicula => pelicula.proximosEstrenos);
-    }
-
-    if(valores.enCines){
-      this.peliculas = this.peliculas.filter(pelicula => pelicula.enCines);
-    }
+    });
   }
 
   limpiar(){
     this.form.patchValue(this.formularioOriginal);
+  }
+
+  paginatorUpdate(datos: PageEvent){
+    this.paginaActual = datos.pageIndex + 1;
+    this.cantidadElementosMostrar = datos.pageSize;
+    this.buscarPeliculas(this.form.value);
   }
 
 }
