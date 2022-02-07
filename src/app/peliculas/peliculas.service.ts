@@ -17,6 +17,10 @@ export class PeliculasService {
     return this.http.get<PeliculaPostGet>(`${this.apiUrl}/PostGet`);
   }
 
+  public borrar(id:number){
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
   public filtrar(valores:any):Observable<any>{
     const params = new HttpParams({fromObject: valores});
     return this.http.get<PeliculaDto[]>(`${this.apiUrl}/filtrar`, {params,observe: 'response'});

@@ -6,23 +6,40 @@
   </span>
 
   <div>
-    <a mat-button routerLink="peliculas/buscar"><mat-icon>search</mat-icon>Buscar pelicula</a>
-
+    <a mat-button routerLink="peliculas/buscar"
+      ><mat-icon>search</mat-icon>Buscar pelicula</a
+    >
   </div>
+  
+  <app-autorizado [rol]="'admin'">
+    <ng-container Autorizado>
+      <div>
+        <a mat-button routerLink="generos">Generos</a>
+      </div>
 
-  <div>
-    <a mat-button routerLink="generos">Generos</a>
-  </div>
+      <div>
+        <a mat-button routerLink="actores">Actores</a>
+      </div>
 
-  <div>
-    <a mat-button routerLink="actores">Actores</a>
-  </div>
+      <div>
+        <a mat-button routerLink="cines">Cines</a>
+      </div>
 
-  <div>
-    <a mat-button routerLink="cines">Cines</a>
-  </div>
+      <div>
+        <a mat-button routerLink="peliculas/crear">Crear Pelicula</a>
+      </div>
+    </ng-container>
+  </app-autorizado>
+<div class="espacio"></div>
+<app-autorizado>
+  <ng-container Autorizado>
+    <span>Hola, {{seguridadService.obtenerCampoJwt('email')}} </span>
+    <a mat-button>Logout</a>
+  </ng-container>
+  <ng-container noAutorizado>
+    <a mat-button routerLink="login">Login</a>
+    <a mat-button routerLink="registro">Registrar</a>
+  </ng-container>
+</app-autorizado>
 
-  <div>
-    <a mat-button routerLink="peliculas/crear">Crear Pelicula</a>
-  </div>
 </mat-toolbar>

@@ -12,12 +12,27 @@
           <img [src]="pelicula.poster" alt="Poster" />
         </a>
         <p [routerLinks]="'/peliculas/editar/' + pelicula.id">{{ pelicula.titulo }}</p>
-        <div>
-          <a mat-flat-button color="primary" [routerLink]="'/peliculas/editar/' + pelicula.id">
-            Editar
-          </a>
-          <button mat-flat-button color="warn" type="button">Borrar</button>
-        </div>
+        <app-autorizado [rol]="'admin'">
+          <ng-container Autorizado>
+            <div>
+              <a mat-flat-button color="primary" [routerLink]="'/peliculas/editar/' + pelicula.id">
+                Editar
+              </a>
+              <button 
+                mat-flat-button 
+                color="warn"
+                [swal]="{title: 'Confirmación',
+                text: 'Esta seguro que desea eliminar el registro?',
+                showCancelButton: 'true'}"
+                (confirm)="borrar(element.id)"
+                type="button">Borrar</button>
+            </div>
+          </ng-container>
+          <ng-container noAutorizado>
+            No estas autorizado
+          </ng-container>
+        </app-autorizado>
+       
       </div>
     </div>
   </ng-container>
