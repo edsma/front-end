@@ -13,6 +13,7 @@ export class SeguridadService {
   baseUrl = environment.apiUrl + 'cuentas';
   private readonly llaveToken = 'token';
   private readonly llaveExpiracion = 'tokenExpiracion';
+  private readonly campoRol = 'role';
   logeado() : boolean{
     const token = localStorage.getItem(this.llaveToken);
     if(!token){
@@ -34,6 +35,10 @@ export class SeguridadService {
 
   obtenerRol(): string {
     return 'admin';
+  }
+
+  obtenerToken(){
+    return localStorage.getItem(this.llaveToken);
   }
 
   obtenerCampoJwt(campo: string ): string{

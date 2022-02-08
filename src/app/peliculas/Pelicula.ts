@@ -24,7 +24,9 @@ export interface PeliculaDto{
     poster: string,
     generos: generoDto[],
     actores: actorPeliculaDto[],
-    cines: cineDto[]
+    cines: cineDto[],
+    votoUsuario: number,
+    promedioVoto: number
 }
 
 export interface PeliculaPostGet{

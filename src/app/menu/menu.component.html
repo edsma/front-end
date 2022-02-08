@@ -34,7 +34,7 @@
 <app-autorizado>
   <ng-container Autorizado>
     <span>Hola, {{seguridadService.obtenerCampoJwt('email')}} </span>
-    <a mat-button>Logout</a>
+    <a mat-button (click)="seguridadService.logOut()">Logout</a>
   </ng-container>
   <ng-container noAutorizado>
     <a mat-button routerLink="login">Login</a>
