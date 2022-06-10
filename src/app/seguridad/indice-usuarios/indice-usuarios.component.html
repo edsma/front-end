@@ -1,0 +1,44 @@
+<h2>Generos</h2>
+<button mat-flat-button color="primary" routerLink="/generos/crear">Crear Nuevo</button>
+
+<app-listado-generico [listado]="usuarios">
+    <ng-container contenedor>
+        <table
+        #table
+        mat-table
+        [dataSource]="usuarios"
+        class="mat-elevation-z8 tabla-indice">
+            <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef>Email</th>
+                <th mat-cell *matCellDef="let element">{{element.email}}</th>
+            </ng-container>
+            <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                <th mat-cell *matCellDef="let element">{{element.nombre}}</th>
+            </ng-container>
+            <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                <th mat-cell *matCellDef="let element">
+                    <button mat-flat-button color="warn"
+                    [swal]="{title: 'Confirmación',
+                    text: 'Esta seguro que desea realizar la operación?',
+                    showCancelButton: 'true'}" (confirm)="hacerAdmin(element.id)">Hacer Admin</button>
+                    <button mat-flat-button color="warn"
+                    [swal]="{title: 'Confirmación',
+                    text: 'Esta seguro que desea realizar la operación?',
+                    showCancelButton: 'true'}" (confirm)="RemoverAdmin(element.id)">Remover Admin</button>
+                </th>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="columnasMostrar"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnasMostrar"></tr>
+        </table>
+        <mat-paginator 
+            [pageSizeOptions]="[5,10,20,50]"
+            showFirstLastButtons
+            [length]="cantidadTotalRegistros"
+            [pageSize]="cantidadElementosMostrar"
+            class="mat-elevation-z8"
+            (page)="actualizarPaginacion($event)"
+        ></mat-paginator>
+    </ng-container>
+</app-listado-generico>

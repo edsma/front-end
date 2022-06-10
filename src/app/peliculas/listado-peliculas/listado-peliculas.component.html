@@ -13,7 +13,7 @@
         </a>
         <p [routerLinks]="'/peliculas/editar/' + pelicula.id">{{ pelicula.titulo }}</p>
         <app-autorizado [rol]="'admin'">
-          <ng-container Autorizado>
+          <ng-container noAutorizado>
             <div>
               <a mat-flat-button color="primary" [routerLink]="'/peliculas/editar/' + pelicula.id">
                 Editar
