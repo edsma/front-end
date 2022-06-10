@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ServiciosMaestroDto } from '../ServiciosMaestro';
 import { TurnosService } from '../turnos.service';
 import { ServiciosDto } from './Turnos';
 
@@ -14,7 +15,8 @@ export class TurnosComponent implements OnInit {
   constructor(private router: Router, private formBuilder: FormBuilder, private turnosServices: TurnosService) { }
   
   registros: ServiciosDto;
-  columnasMostrar = ['id','HoraInicio','HoraFin','Estado'];
+  servicios: ServiciosMaestroDto;
+  columnasMostrar = ['id','HoraInicio','HoraFin','Estado','Acciones'];
   form: FormGroup;
 
   @Input()
@@ -45,14 +47,22 @@ export class TurnosComponent implements OnInit {
     if(this.modelo !== undefined){
       this.form.patchValue(this.modelo);
     }
+
+    this.consultarServicios();
+  }
+
+  consultarServicios()
+  {
+    this.turnosServices.consultarServicios().subscribe((res: ServiciosMaestroDto)=> {
+      this.servicios = res;
+    }, (error) => console.log(error));
+    
   }
 
   guardarCambios()
   {
     this.turnosServices.crear(this.form.value).subscribe((res: ServiciosDto)=> {
-      // this.router.navigate(['/Tipos']);
       this.registros = res;
-      console.log(this.registros);
     }, (error) => console.log(error));
     
   }

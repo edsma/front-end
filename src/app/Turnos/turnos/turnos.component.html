@@ -1,47 +1,99 @@
 <form (submit)="guardarCambios()" [formGroup]="form">
-    <mat-form-field appearance="outline">
-            <mat-label>Nombre</mat-label>
-            <input formControlName="IdServicio" matInput />
-            <br>
-            <input formControlName="HoraInicio" matInput />
-            <br>
-            <input formControlName="HoraFin" matInput />
-            <br>
-            
-            <ngx-mat-timepicker formControlName="date2"></ngx-mat-timepicker>
+  <mat-form-field appearance="outline">
+    <mat-form-field appareance="outline">
+      <mat-label>Fecha Inicio</mat-label>
+      <input
+        formControlName="HoraInicio"
+        matInput
+        [matDatepicker]="picker"
+        readonly
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <!-- 
+            <input formControlName="HoraInicio" matInput /> -->
+    <br />
 
-            <div>
-                <button mat-flat-button class="buttonEjecutar" color="primary">
-                    Generar Turnos
-                </button>
-            </div>
+    <mat-form-field appareance="outline">
+      <mat-label>Fecha fin</mat-label>
+      <input
+        formControlName="HoraFin"
+        matInput
+        [matDatepicker]="picker2"
+        readonly
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+    <!-- <input formControlName="HoraFin" matInput /> -->
+    <br />
+<!-- 
+    <mat-form-field appareance="outline">
+      <mat-label>Servicio</mat-label>
+      <input formControlName="IdServicio" matInput />
+    </mat-form-field>
+    <br /> -->
 
-            <table
-            #table
-            mat-table
-            [dataSource]="registros"
-            class="mat-elevation-z8 tabla-indice">
-                <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef>Fecha Turno</th>
-                    <th mat-cell *matCellDef="let element">{{element.fechaTurno | date}}</th>
-                </ng-container>
-                <ng-container matColumnDef="HoraInicio">
-                    <th mat-header-cell *matHeaderCellDef>Hora de Inicio</th>
-                    <th mat-cell *matCellDef="let element">{{element.horaInicio.hours + ':' +  element.horaInicio.minutes}}</th>
-                </ng-container>
-                <ng-container matColumnDef="HoraFin">
-                    <th mat-header-cell *matHeaderCellDef>Hora Final</th>
-                    <th mat-cell *matCellDef="let element">{{element.horaFin.hours  + ':' +  element.horaInicio.minutes}}</th>
-                </ng-container>
-                <ng-container matColumnDef="Estado">
-                    <th mat-header-cell *matHeaderCellDef>Estado</th>
-                    <th mat-cell *matCellDef="let element">{{element.estado? 'Activo':'Cerrado'}}</th>
-                </ng-container>
-            
-                <tr mat-header-row *matHeaderRowDef="columnasMostrar"></tr>
-                <tr mat-row *matRowDef="let row; columns: columnasMostrar"></tr>
-            </table>
-
+    <mat-form-field appareance="outline">
+      <mat-label>Servicio</mat-label>
+      <mat-select formControlName="IdServicio">
+        <mat-option *ngFor="let servicio of servicios" [value]="servicio.idServicio">{{
+            servicio.nombreServicio
+        }}</mat-option>
+        <!-- <mat-option value="1">Prueba</mat-option> -->
+      </mat-select>
     </mat-form-field>
 
+    <div>
+      <button mat-flat-button class="buttonEjecutar" color="primary">
+        Generar Turnos
+      </button>
+    </div>
+
+    <table
+      #table
+      mat-table
+      [dataSource]="registros"
+      class="mat-elevation-z8 tabla-indice"
+    >
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>Fecha Turno</th>
+        <th mat-cell *matCellDef="let element">
+          {{ element.fechaTurno | date }}
+        </th>
+      </ng-container>
+      <ng-container matColumnDef="HoraInicio">
+        <th mat-header-cell *matHeaderCellDef>Hora de Inicio</th>
+        <th mat-cell *matCellDef="let element">
+          {{ element.horaInicio.hours + ":" + element.horaInicio.minutes }}
+        </th>
+      </ng-container>
+      <ng-container matColumnDef="HoraFin">
+        <th mat-header-cell *matHeaderCellDef>Hora Final</th>
+        <th mat-cell *matCellDef="let element">
+          {{ element.horaFin.hours + ":" + element.horaFin.minutes }}
+        </th>
+      </ng-container>
+      <ng-container matColumnDef="Estado">
+        <th mat-header-cell *matHeaderCellDef>Estado</th>
+        <th mat-cell *matCellDef="let element">
+          {{ element.estado ? "Activo" : "Cerrado" }}
+        </th>
+      </ng-container>
+      <ng-container matColumnDef="Acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <th mat-cell *matCellDef="let element">
+            <button mat-flat-button color="warn"
+            [swal]="{title: 'Confirmación',
+            text: 'Esta seguro que desea eliminar el registro?',
+            showCancelButton: 'true'}" (confirm)="borrar(element.id)">Reservar</button>
+        </th>
+    </ng-container>
+ 
+
+      <tr mat-header-row *matHeaderRowDef="columnasMostrar"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnasMostrar"></tr>
+    </table>
+  </mat-form-field>
 </form>
