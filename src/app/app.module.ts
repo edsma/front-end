@@ -43,6 +43,7 @@ import { RegistroComponent } from './seguridad/registro/registro.component';
 import { FormularioAutenticacionComponent } from './seguridad/formulario-autenticacion/formulario-autenticacion.component';
 import { SeguridadInterceptorService } from './seguridad/seguridad-interceptor.service';
 import { IndiceUsuariosComponent } from './seguridad/indice-usuarios/indice-usuarios.component';
+import { TurnosComponent } from './Turnos/turnos/turnos.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { IndiceUsuariosComponent } from './seguridad/indice-usuarios/indice-usua
     RegistroComponent,
     FormularioAutenticacionComponent,
     IndiceUsuariosComponent,
+    TurnosComponent,
 
   ],
   imports: [

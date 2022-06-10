@@ -18,10 +18,12 @@ import { LoginComponent } from './seguridad/login/login.component';
 import { EsAdminGuard } from './es-admin.guard';
 import { RegistroComponent } from './seguridad/registro/registro.component';
 import { IndiceUsuariosComponent } from './seguridad/indice-usuarios/indice-usuarios.component';
+import { TurnosComponent } from './Turnos/turnos/turnos.component';
 
 const routes: Routes = [
   {path: '', component: LandingPageComponent}, 
   {path: 'generos', component: IndiceGenerosComponent},
+  {path: 'Turnos', component: TurnosComponent},
   {path: 'generos/crear', component: CrearGeneroComponent }, 
   {path: 'generos/editar/:id', component: EditarGeneroComponent},
 

@@ -16,6 +16,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatChipsModule} from '@angular/material/chips';
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 
 @NgModule({
   declarations: [],
@@ -35,7 +36,9 @@ import {MatChipsModule} from '@angular/material/chips';
     DragDropModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
-    MatChipsModule
+    MatChipsModule,
+    NgxMatTimepickerModule,
+    NgxMatDatetimePickerModule
   ],
   imports: [
     CommonModule
